@@ -1,0 +1,15 @@
+{% extends "student_home/base.html" %}
+{% block content %}
+    {% for post in posts %}
+    <article class="media content-section">
+        <div class="media-body">
+          <div class="article-metadata">
+            <a class="mr-2" href="#">{{ post.poster }}</a>
+            <small class="text-muted">{{ post.date_posted }}</small>
+          </div>
+          <h2><a class="article-title" href="#">{{ post.subject }}</a></h2>
+          <p class="article-content">{{ post.question }}</p>
+        </div>
+      </article>
+      {% endfor %}
+{% endblock %}    
