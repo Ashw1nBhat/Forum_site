@@ -1,27 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from .models import Question
 
-posts = [
-    {
-        'poster':'ashwin',
-        'subject':'DAA',
-        'question':'first post content',
-        'date_posted':'Mar 8 2018'
-    },
-     {
-        'poster':'abhishek',
-        'subject':'DAA',
-        'question':'first post content',
-        'date_posted':'Mar 8 2018'
-    }
-
-]
 
 def home(request):
-    context = {
-        'posts': posts
+    questions = {
+        'posts': Question.objects.all()
     }
-    return render(request, 'student_home/student-home.html',context)
+    return render(request, 'student_home/student-home.html',questions)
 
 def about(request):
     return render(request, 'student_home/student-about.html',{'subject':'About'})

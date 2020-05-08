@@ -4,18 +4,12 @@ from django.utils import timezone
 
 
 class Question(models.Model):
-    question_text = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
-
-    def __str__(self):
-        return self.question_text  
+    poster = models.ForeignKey(User, on_delete=models.CASCADE) 
+    subject = models.CharField(max_length=15)
+    question_text = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
     
+    def __str__(self):
+        return self.subject
     
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    answer_text = models.CharField(max_length=200) 
-    pub_date = models.DateTimeField('date published')
-
-    def __str__(self):
-        return self.answer_text
