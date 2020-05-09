@@ -2,6 +2,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from .forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
 
 def student_register(request):
     if request.method == 'POST':
@@ -14,4 +15,9 @@ def student_register(request):
     else:    
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form' : form})
+
+
+@login_required
+def student_profile(request):
+    return render(request, 'users/profile.html')    
 
