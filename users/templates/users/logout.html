@@ -1,0 +1,17 @@
+{% extends "student_home/base.html" %}
+{% block content %}
+    <h2>You Have Logged Out</h2>
+        
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Log In Again: <a class="ml-2" href="{% url 'register' %}">Student</a>
+            </small>
+            <small class="text-muted ml-1">
+               | <a class="ml-2" href="{% url 'login' %}">Moderator</a>
+            </small>
+            <small class="text-muted ml-1">
+                | <a class="ml-1" href="{% url 'login' %}">Teacher</a>
+            </small>
+        </div>
+    
+{% endblock %}
