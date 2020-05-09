@@ -1,17 +1,18 @@
 {% extends "student_home/base.html" %}
 {% block content %}
+    <h1 class="mb-3">Questions by {{ view.kwargs.username }} ({{ page_obj.paginator.count }})</h1>
     {% for post in posts %}
-    <article class="media content-section">
-      <img class="rounded-circle article-img" src="{{ post.poster.profile.image.url }}">
-      <div class="media-body">
-        <div class="article-metadata">
-          <a class="mr-2" href="{% url 'student-questions' post.poster.username %}">{{ post.poster }}</a>
-          <small class="text-muted">{{ post.date_posted }}</small>
-        </div>
-        <h2><a class="article-title" href="{% url 'question-detail' post.pk %}">{{ post.subject }}</a></h2>
-        <p class="article-content">{{ post.question_text }}</p>
-      </div>
-    </article>
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ post.poster.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'student-questions' post.poster.username %}">{{ post.poster }}</a>
+              <small class="text-muted">{{ post.date_posted }}</small>
+            </div>
+            <h2><a class="article-title" href="{% url 'question-detail' post.pk %}">{{ post.title }}</a></h2>
+            <p class="article-content">{{ post.question_text }}</p>
+          </div>
+        </article>
     {% endfor %}
     {% if is_paginated %}
 

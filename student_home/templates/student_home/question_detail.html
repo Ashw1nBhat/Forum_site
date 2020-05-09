@@ -1,0 +1,16 @@
+{% extends "student_home/base.html" %}
+{% block content %}
+    
+        <article class="media content-section">
+          <img class="rounded-circle article-img" src="{{ object.poster.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="{% url 'student-questions' object.poster.username %}">{{ object.poster }}</a>
+              <small class="text-muted">{{ object.date_posted }}</small>
+            </div>
+            <h2 class="article-title">{{ object.subject }}</h2>
+            <p class="article-content">{{ object.question_text }}</p>
+          </div>
+        </article>
+    
+{% endblock content %}
