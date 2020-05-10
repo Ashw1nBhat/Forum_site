@@ -71,34 +71,23 @@ class PostCreateView(LoginRequiredMixin,CreateView):
 
 
 
-class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,UpdateView):
+class PostUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     model = Question
-    permission_required = 'can_update'
+    permission_required = 'student_home.can_update'
     fields = ['subject','question_text']
     success_url = reverse_lazy('student_home')  
 
    
-    def form_valid(self,form):
-        form.instance.poster = self.request.user 
-        return super().form_valid(form) 
 
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.poster:
-            return True
-        return False  
+      
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,DeleteView):
+class PostDeleteView(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
     model = Question
-    permission_required = 'can_update'
+    permission_required = 'student_home.can_update'
     success_url = '/'  
 
-    def test_func(self):
-        post = self.get_object()
-        if self.request.user == post.poster:
-            return True
-        return False  
+     
 
 
 def about(request):
@@ -112,7 +101,7 @@ def announcements(request):
 
 class AnswerCreateView(PermissionRequiredMixin,CreateView):
     model = Answer
-    permission_required = 'can_answer'
+    permission_required = 'student_home.can_answer'
     fields = ['a_question','answer_text']
     success_url = reverse_lazy("student_home")  
 
@@ -122,7 +111,7 @@ class AnswerCreateView(PermissionRequiredMixin,CreateView):
 
 class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,UpdateView):
     model = Answer
-    permission_required = 'can_answer'
+    permission_required = 'student_home.can_answer'
     fields = ['a_question','answer_text']
     success_url = '/' 
 

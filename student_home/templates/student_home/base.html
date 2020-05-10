@@ -38,7 +38,7 @@
               </div>
               <!-- Navbar Right Side -->
               <div class="navbar-nav">
-                {% if user.is_authenticated and user.is_staff %}
+                {% if user.is_authenticated and user.is_superuser %}
                 <a class="nav-item nav-link" href="{% url 'answer-create' %}">Post Answer</a>
                 <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
                 <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
