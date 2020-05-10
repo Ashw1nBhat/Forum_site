@@ -7,11 +7,13 @@
             <div class="article-metadata">
               <a class="mr-2" href="{% url 'student-questions' questions.poster.username %}">{{ question.poster.groups}}</a>
               <small class="text-muted">{{ questions.date_posted }}</small>
+              {% if user.is_staff %}
               <div>
                 
                 <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'question-update' questions.id %}">Update</a>
                 <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'question-delete' questions.id %}">Delete</a>
               </div>
+              {% endif %}
                 
             </div>
             <h2 class="article-title">{{ questions.subject }}</h2>
@@ -29,10 +31,11 @@
             </div>
 
             <div>
-                
-              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'question-update' questions.id %}">Update</a>
-              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'question-delete' questions.id %}">Delete</a>
+                {% if user.is_staff %}
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'answer-update' answers.id %}">Update</a>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'answer-delete' answers.id %}">Delete</a>
             </div>
+            {% endif %}
             
             <p class="article-content">{{ answers.answer_text }}</p>
           </div>

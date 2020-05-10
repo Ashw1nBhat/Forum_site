@@ -21,7 +21,7 @@ class Question(models.Model):
 
     
     def __str__(self):
-        return str(self.pk)
+        return str(self.question_text)
 
     
 
@@ -32,7 +32,7 @@ class Answer(models.Model):
     poster = models.ForeignKey(User, on_delete=models.CASCADE) 
     answer_text = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
-    a_question = models.OneToOneField(Question, on_delete=models.CASCADE)
+    a_question = models.OneToOneField(Question, on_delete=models.CASCADE )
 
     class Meta:
         permissions = [

@@ -5,8 +5,6 @@ from django.views.generic import ListView,DetailView,CreateView,UpdateView,Delet
 from .models import Question,Answer
 from django.urls import reverse_lazy
 
-from django.utils.decorators import method_decorator
-
 
 
 def home(request):
@@ -23,6 +21,8 @@ class PostListView(ListView):
     ordering = ['-date_posted']
     paginate_by = 3
 
+
+
 class UserPostListView(ListView):
     model = Question
     template_name = 'student_home/student_questions.html'
@@ -35,7 +35,9 @@ class UserPostListView(ListView):
         return Question.objects.filter(poster=user).order_by('-date_posted')
 
 
+
 def PostDetailView(request,id):
+    
     sc = Answer.objects.filter(a_question = id)
 
     if sc.count() > 0:
@@ -56,7 +58,6 @@ def PostDetailView(request,id):
     
   
 
-    
 class PostCreateView(LoginRequiredMixin,CreateView):
     model = Question
     fields = ['subject','question_text']
@@ -66,6 +67,8 @@ class PostCreateView(LoginRequiredMixin,CreateView):
     def form_valid(self,form):
         form.instance.poster = self.request.user
         return super().form_valid(form)
+
+
 
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,UpdateView):
@@ -86,19 +89,30 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequired
         return False  
 
 
-class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin ,DeleteView):
+class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,DeleteView):
     model = Question
+    permission_required = 'can_update'
     success_url = '/'  
 
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.poster:
             return True
-        return False                    
+        return False  
+
+
+def about(request):
+    return render(request, 'student_home/student-about.html', {'title': 'About'})
+
+def announcements(request):
+    return render(request, 'student_home/student-announce.html', {'title': 'Announcements'})                              
     
 
-class AnswerCreateView(CreateView):
+
+
+class AnswerCreateView(PermissionRequiredMixin,CreateView):
     model = Answer
+    permission_required = 'can_answer'
     fields = ['a_question','answer_text']
     success_url = reverse_lazy("student_home")  
 
@@ -106,11 +120,37 @@ class AnswerCreateView(CreateView):
         form.instance.poster = self.request.user
         return super().form_valid(form)
 
+class AnswerUpdateView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,UpdateView):
+    model = Answer
+    permission_required = 'can_answer'
+    fields = ['a_question','answer_text']
+    success_url = '/' 
+
+   
+    def form_valid(self,form):
+        form.instance.poster = self.request.user 
+        return super().form_valid(form) 
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.poster:
+            return True
+        return False  
+
+
+class AnswerDeleteView(LoginRequiredMixin, UserPassesTestMixin ,PermissionRequiredMixin,DeleteView):
+    model = Answer
+    permission_required = 'can_answer'
+    success_url = '/'  
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == post.poster:
+            return True
+        return False          
+
+       
+
  
 
 
-def about(request):
-    return render(request, 'student_home/student-about.html', {'title': 'About'})
-
-def announcements(request):
-    return render(request, 'student_home/student-announce.html', {'title': 'Announcements'})    
