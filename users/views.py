@@ -4,6 +4,9 @@ from django.contrib import messages
 from .forms import UserRegisterForm,UserUpdateForm,ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
 
+
+
+
 def student_register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -15,6 +18,7 @@ def student_register(request):
     else:    
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form' : form})
+
 
 
 @login_required

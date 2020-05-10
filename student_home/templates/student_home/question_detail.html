@@ -2,15 +2,45 @@
 {% block content %}
     
         <article class="media content-section">
-          <img class="rounded-circle article-img" src="{{ object.poster.profile.image.url }}">
+          <img class="rounded-circle article-img" src="{{ questions.poster.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{% url 'student-questions' object.poster.username %}">{{ object.poster }}</a>
-              <small class="text-muted">{{ object.date_posted }}</small>
+              <a class="mr-2" href="{% url 'student-questions' questions.poster.username %}">{{ question.poster.groups}}</a>
+              <small class="text-muted">{{ questions.date_posted }}</small>
+              <div>
+                
+                <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'question-update' questions.id %}">Update</a>
+                <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'question-delete' questions.id %}">Delete</a>
+              </div>
+                
             </div>
-            <h2 class="article-title">{{ object.subject }}</h2>
-            <p class="article-content">{{ object.question_text }}</p>
+            <h2 class="article-title">{{ questions.subject }}</h2>
+            <p class="article-content">{{ questions.question_text }}</p>
           </div>
         </article>
+        {% if answers %}
+        
+          <article class="media content-section mt-10">
+          <img class="rounded-circle article-img" src="{{ answers.poster.profile.image.url }}">
+          <div class="media-body">
+            <div class="article-metadata">
+              <small class="mr-2" >{{ answers.poster }}</small>
+              <small class="text-muted">{{ answers.date_posted }}</small>
+            </div>
+
+            <div>
+                
+              <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'question-update' questions.id %}">Update</a>
+              <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'question-delete' questions.id %}">Delete</a>
+            </div>
+            
+            <p class="article-content">{{ answers.answer_text }}</p>
+          </div>
+          </article>
+          
+          {% endif %}
+         
+        
+        
     
 {% endblock content %}
