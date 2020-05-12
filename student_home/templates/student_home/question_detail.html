@@ -5,7 +5,7 @@
           <img class="rounded-circle article-img" src="{{ questions.poster.profile.image.url }}">
           <div class="media-body">
             <div class="article-metadata">
-              <a class="mr-2" href="{% url 'student-questions' questions.poster.username %}">{{ question.poster.groups}}</a>
+              <a class="mr-2" href="{% url 'student-questions' questions.poster.username %}">{{ questions.poster}}</a>
               <small class="text-muted">{{ questions.date_posted }}</small>
               {% if user.is_staff %}
               <div>
